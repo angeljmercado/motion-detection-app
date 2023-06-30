@@ -7,7 +7,8 @@ time.sleep(1)
 
 first_frame = None
 status_list = []
-while True:
+count = 1
+while True:  
     status = 0
     check, frame = video.read()
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -28,6 +29,11 @@ while True:
         rectangle = cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
         if rectangle.any():
             status = 1
+            cv2.imwrite(f"images/image-{count}.png", frame)
+            count += 1
+            all_images = glob.glob("images/*.png")
+            middle_frame = int(len(all_images)/2)
+            image_with_object = all_images[middle_frame]
     status_list.append(status)
     status_list = status_list[-2:]
     print(status_list)
